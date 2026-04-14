@@ -26,21 +26,24 @@ async function fetchWeatherAlerts(stateAbbr) {
 
 // Display alerts on page
 function displayAlerts(data, stateAbbr) {
-  const container = document.getElementById("alerts-container");
+  const container = document.getElementById("alerts-display");
   const errorDiv = document.getElementById("error-message");
 
   // Clear previous UI
-  container.innerHTML = "";
+  if (container) {
+    container.innerHTML = "";
+  }
 
   // Hide and clear error
   errorDiv.textContent = "";
   errorDiv.style.display = "none";
+  errorDiv.classList.add('hidden');
 
   const alerts = data.features || [];
 
   // Summary title
   const title = document.createElement("h2");
-  title.textContent = `Current watches, warnings, and advisories for ${stateAbbr}: ${alerts.length}`;
+  title.textContent = `Weather Alerts: ${alerts.length}`;
   container.appendChild(title);
 
   // List of alert headlines
@@ -56,11 +59,14 @@ function displayAlerts(data, stateAbbr) {
 // Display error messages
 function showError(message) {
   const errorDiv = document.getElementById("error-message");
-  const container = document.getElementById("alerts-container");
+  const container = document.getElementById("alerts-display");
 
-  container.innerHTML = "";
+  if (container) {
+    container.innerHTML = "";
+  }
   errorDiv.textContent = message;
   errorDiv.style.display = "block";
+  errorDiv.classList.remove('hidden');
 }
 
 // Button click handler
